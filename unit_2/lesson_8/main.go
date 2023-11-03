@@ -50,4 +50,6 @@ func main() {
 		fmt.Println("Andromeda Galaxy is", days, "light days away.")
 		// fmt.Println(distance) //! overflows
 	}
+
+  canis()
 }
