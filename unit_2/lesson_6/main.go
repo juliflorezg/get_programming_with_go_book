@@ -54,4 +54,6 @@ func main() {
 	}
 	fmt.Println(piggyBank) // 1.0999999999999999
 
+	piggy()
+
 }
