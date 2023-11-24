@@ -72,6 +72,10 @@ func (c coordinate) MarshalJSON() ([]byte, error) {
 	}
 
 	return json.Marshal(fc)
+	//the code below is what generates a stack overflow error, it calls this function over and over as we can see thanks to the print statement
+	// fmt.Println("dentro del marshal")
+
+	// return json.Marshal(c)
 }
 
 // * MarshalJSON could be written as the following (defining struct inline)::
