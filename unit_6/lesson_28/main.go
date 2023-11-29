@@ -18,14 +18,13 @@ func proverbs(name string) error {
 	if err != nil {
 		return err
 	}
+  defer f.Close()
 
 	_, err = fmt.Fprintln(f, "Errors are values.")
 	if err != nil {
-		f.Close()
 		return err
 	}
 	_, err = fmt.Fprintln(f, "Don’t just check errors, handle them gracefully.")
-	f.Close()
 	return err
 
 }
