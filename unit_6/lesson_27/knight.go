@@ -16,6 +16,7 @@ func (c *character) pickUp(i *item) {
 	}
 
 	fmt.Printf("character %v has picked up %v\n", c.name, *i)
+	c.leftHand = i
 }
 
 func (c *character) giveTo(to *character) {
@@ -23,6 +24,16 @@ func (c *character) giveTo(to *character) {
 	fmt.Println("character B:", to)
 	if c == nil {
 		fmt.Println("no character that can perform this action (character A)")
+		return
+	}
+
+	if c.leftHand == nil {
+		fmt.Println("This character has nothing to give")
+		return
+	}
+
+	if to.leftHand != nil {
+		fmt.Printf("Character %v already has an item\n", c.name)
 		return
 	}
 
@@ -56,7 +67,7 @@ func knights() {
 	character1.name = "lol"
 
 	arthur.giveTo(&character1)
-	fmt.Println("->"+arthur.name+"<-", arthur.leftHand) // ->Arthur<- <nil>
+	fmt.Println("->"+arthur.name+"<-", arthur.leftHand)                               // ->Arthur<- <nil>
 	fmt.Println("->"+character1.name+"<-", character1.leftHand, *character1.leftHand) // ->lol<- 0xc00008a0c0 sword
 
 }
