@@ -10,22 +10,48 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 )
+
+type safeWriter struct {
+	w   io.Writer
+	err error
+}
+
+func (sf *safeWriter) writeLn(str string) {
+	if sf.err != nil {
+		return
+	}
+
+	_, sf.err = fmt.Fprintln(sf.w, str)
+	return
+}
 
 func proverbs(name string) error {
 	f, err := os.Create(name)
 	if err != nil {
 		return err
 	}
-  defer f.Close()
+	defer f.Close()
 
-	_, err = fmt.Fprintln(f, "Errors are values.")
-	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprintln(f, "Don’t just check errors, handle them gracefully.")
-	return err
+	sw := safeWriter{w: f}
+
+	sw.writeLn("Errors are values")
+	sw.writeLn("Don’t just check errors, handle them gracefully.")
+	sw.writeLn("Don't panic.")
+	sw.writeLn("Make the zero value useful.")
+	sw.writeLn("The bigger the interface, the weaker the abstraction.")
+	sw.writeLn("interface{} says nothing.")
+	sw.writeLn("Gofmt's style is no one's favorite, yet gofmt is everyone's favorite.")
+	sw.writeLn("Documentation is for users.")
+	sw.writeLn("A little copying is better than a little dependency.")
+	sw.writeLn("Clear is better than clever.")
+	sw.writeLn("Concurrency is not parallelism.")
+	sw.writeLn("Don’t communicate by sharing memory, share memory by communicating.")
+	sw.writeLn("Channels orchestrate; mutexes serialize.")
+
+	return sw.err
 
 }
 
@@ -43,8 +69,8 @@ func main() {
 
 	err2 := proverbs("proverbs.txt")
 
-  if err != nil {
-    fmt.Println(err2)
-    os.Exit(1)
-  }
+	if err != nil {
+		fmt.Println(err2)
+		os.Exit(1)
+	}
 }
