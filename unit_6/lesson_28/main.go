@@ -101,7 +101,7 @@ func main() {
 			//? use of type assertion to get the actual type (underlying type) of value err and getting its inner errors stored in []error
 			if errs, ok := err.(SudokuError); ok {
 				fmt.Println(errs)
-				fmt.Printf("%d error(s) occured: \n", len(errs))
+				fmt.Printf("%d error(s) occurred: \n", len(errs))
 				for _, e := range errs {
 					fmt.Printf("- %v\n", e)
 				}
