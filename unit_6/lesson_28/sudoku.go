@@ -1,6 +1,9 @@
 package main
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 const rows, columns = 9, 9
 
@@ -11,13 +14,32 @@ var (
 
 type grid [rows][columns]int8
 
-func (g *grid) set(r, c int, value int8) error {
-	if !inBounds(r, c) {
-		return ErrBounds
-	}
+type SudokuError []error
 
+func (se SudokuError) Error() string{
+  var s []string
+
+  for _, err := range se {
+    s = append(s, err.Error())
+  }
+
+  return strings.Join(s, ", ")
+}
+
+func (g *grid) set(r, c int, value int8) error {
+  var errs SudokuError
+	if !inBounds(r, c) {
+    errs = append(errs, ErrBounds)
+		// return ErrBounds
+	}
+  
   if !isValidDigit(value){
-    return ErrDigit
+    errs = append(errs, ErrDigit)
+    // return ErrDigit
+  }
+
+  if len(errs) > 0 {
+    return errs
   }
 
 	g[r][c] = value

@@ -79,24 +79,36 @@ func main() {
 
 		var g grid
 
-		err := g.set(10, 0, 5)
+		// err := g.set(10, 0, 5)
+
+		// if err != nil {
+		// 	fmt.Printf("An error occurred: %v.\n", err)
+		// 	os.Exit(1)
+		// }
+
+		err = g.set(0, 0, 9)
 
 		if err != nil {
-			fmt.Printf("An error occurred: %v.\n", err)
-			os.Exit(1)
-		}
 
-		err = g.set(0, 0, 15)
+			// switch err {
+			// case ErrBounds, ErrDigit:
+			// 	fmt.Println("Les erreurs de paramètres hors limites.") // error de parámetro fuera de rango
+			// default:
+			// 	fmt.Println(err)
+			// }
+			// os.Exit(1)
 
-		if err != nil {
-
-			switch err {
-			case ErrBounds, ErrDigit:
-				fmt.Println("Les erreurs de paramètres hors limites.") // error de parámetro fuera de rango
-			default:
-				fmt.Println(err)
+			//? use of type assertion to get the actual type (underlying type) of value err and getting its inner errors stored in []error
+			if errs, ok := err.(SudokuError); ok {
+				fmt.Println(errs)
+				fmt.Printf("%d error(s) occured: \n", len(errs))
+				for _, e := range errs {
+					fmt.Printf("- %v\n", e)
+				}
 			}
 			os.Exit(1)
 		}
 	}
+
+	parseUrl()
 }
