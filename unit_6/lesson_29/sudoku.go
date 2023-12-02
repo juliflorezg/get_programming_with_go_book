@@ -125,6 +125,19 @@ func isInColumn(g *SudokuGrid, c int, v int8) bool {
 }
 
 func isInSubgrid(g *SudokuGrid, r, c int, value int8) bool {
+	//* all the code bellow could be replaced with this concise (& clever) code 
+
+	// startRow, startColumn := r/3*3, c/3*3
+	// for row := startRow; row < startRow+3; row++ {
+	// 	for column := startColumn; column < startColumn+3; column++ {
+	// 		if g[row][column] == value {
+	// 			return true
+	// 		}
+	// 	}
+	// }
+	// return false
+
+
 	// // todo determine the corresponding subgrid for that position
 
 	var rowStart, rowEnd, colStart, colEnd int
