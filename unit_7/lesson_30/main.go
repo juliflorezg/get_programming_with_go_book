@@ -60,4 +60,32 @@ func main() {
 	go filterGopher(c0, c1)
 	printGopher(c1)
 
+	c2 := make(chan string)
+	c3 := make(chan string)
+
+	go source(c2)
+	go removeIdentical(c2, c3)
+	finalStage(c3)
+
+	fmt.Println()
+  
+	c4 := make(chan string)
+	c5 := make(chan string)
+  
+	go sourceGopher(c4)
+	go splitSentence(c4, c5)
+	printGopher(c5)
+  
+	fmt.Println()
+	c6 := make(chan string)
+	c7 := make(chan string)
+	c8 := make(chan string)
+	c9 := make(chan string)
+
+	go sourceGopher(c6)
+	go splitSentence(c6, c7)
+	go removeIdentical(c7, c8)
+	go filterGopher(c8, c9)
+	printGopher(c9)
+
 }
